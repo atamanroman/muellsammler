@@ -24,6 +24,18 @@ public final class PickUp {
     this.date = date;
   }
 
+  public TrashType getType() {
+    return type;
+  }
+
+  public LocalDate getDate() {
+    return date;
+  }
+
+  public LocalTime getTime() {
+    return time;
+  }
+
   @Override
   public boolean equals(@Nullable Object o) {
     if (this == o) {
@@ -39,5 +51,14 @@ public final class PickUp {
   @Override
   public int hashCode() {
     return Objects.hash(type, date, time);
+  }
+
+  @Override
+  public String toString() {
+    return "PickUp{" +
+      "type=" + type +
+      ", date=" + date +
+      ", time=" + time +
+      '}';
   }
 }
