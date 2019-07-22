@@ -1,14 +1,11 @@
 package com.github.atamanroman.muellsammler.infra;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
 /**
- * Marks whole packages as non-null APIs for traute
+ * Forces null checks per package. Does not descend down the hierarchy.
  */
-@Retention(RetentionPolicy.SOURCE)
-@Target(ElementType.PACKAGE)
+@Retention(RetentionPolicy.CLASS)
 public @interface NonNullApi {
 }
