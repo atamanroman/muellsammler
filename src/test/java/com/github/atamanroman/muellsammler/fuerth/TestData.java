@@ -1,25 +1,16 @@
 package com.github.atamanroman.muellsammler.fuerth;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
+import static com.github.atamanroman.muellsammler.TestDataLoader.textFromClasspath;
 
-public class TestData {
+class TestData {
 
-  public static final String SCHEDULE_CSV;
-  public static final String HOUSENUMBERS_JSON;
+  static final String SCHEDULE_CSV;
+  static final String HOUSENUMBERS_JSON;
 
   static {
-    SCHEDULE_CSV = textFromClasspath("schedule.csv");
-    HOUSENUMBERS_JSON = textFromClasspath("housenumbers.json");
+    SCHEDULE_CSV = textFromClasspath("fuerth/schedule.csv");
+    HOUSENUMBERS_JSON = textFromClasspath("fuerth/housenumbers.json");
   }
 
-  private static String textFromClasspath(String src) {
-    try {
-      var is = FuerthTrashApiTest.class.getResourceAsStream(src);
-      return new String(is.readAllBytes(), Charset.forName("UTF-8"));
-    } catch (IOException e) {
-      throw new IllegalStateException("Could not load testdata");
-    }
-  }
 
 }

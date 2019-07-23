@@ -18,18 +18,18 @@ public class FuerthTrashScheduleSourceTest {
 
   static class FakeFuertTrashApi extends FuerthTrashApi {
     @Override
-    public HouseLocationsJson fetchLocationCodes(StreetName street) {
+    public HouseLocationsJson fetchHouseLocations(StreetName street) {
       return new HouseLocationsJson(TestData.HOUSENUMBERS_JSON);
     }
 
     @Override
-    public TrashScheduleCsv fetchPickUps(Location location) {
+    public TrashScheduleCsv fetchTrashSchedule(Location location) {
       return new TrashScheduleCsv(TestData.SCHEDULE_CSV);
     }
   }
 
   @Test
-  public void isReadFullyFromApi() {
+  public void readEverythingFromApi() {
     var address = new Address(
       new StreetName("Peter-Hannweg-Straße"),
       new HouseNumber("38"),

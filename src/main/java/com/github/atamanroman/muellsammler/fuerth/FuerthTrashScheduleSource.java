@@ -21,9 +21,9 @@ public class FuerthTrashScheduleSource implements TrashScheduleSource {
   @Override
   public TrashSchedule read(Address address) {
     log.info("Read TrashSchedule for {}", city());
-    var locationCodes = trashApi.fetchLocationCodes(address.getStreetName()).parse();
+    var locationCodes = trashApi.fetchHouseLocations(address.getStreetName()).parse();
     var optionalLocation = locationCodes.locationForHouseNumber(address.getHouseNumber());
-    var optionalTrashSchedule = optionalLocation.map(trashApi::fetchPickUps);
+    var optionalTrashSchedule = optionalLocation.map(trashApi::fetchTrashSchedule);
     return optionalTrashSchedule
       .map(TrashScheduleCsv::parse)
       .map(pickUps -> new TrashSchedule(address, pickUps))

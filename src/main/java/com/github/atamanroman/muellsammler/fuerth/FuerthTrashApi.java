@@ -22,9 +22,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -43,7 +43,7 @@ class FuerthTrashApi {
     .connectTimeout(Duration.ofMillis(1000))
     .build();
 
-  public HouseLocationsJson fetchLocationCodes(StreetName street) {
+  public HouseLocationsJson fetchHouseLocations(StreetName street) {
     var encodedStreet = URLEncoder.encode(street.getName(), StandardCharsets.UTF_8);
     var locationCodeUri = URI.create(termineApi + "?r=" + encodedStreet);
     log.info("GET locations from {}", locationCodeUri);
@@ -59,7 +59,7 @@ class FuerthTrashApi {
     }
   }
 
-  public TrashScheduleCsv fetchPickUps(Location location) {
+  public TrashScheduleCsv fetchTrashSchedule(Location location) {
     var scheduleUri = URI.create(termineApi + "?csvexport=" + location.getLocation());
     log.info("GET schedule from {}", scheduleUri);
     var scheduleRequest = HttpRequest.newBuilder(scheduleUri)
@@ -111,7 +111,7 @@ class FuerthTrashApi {
       this.csv = csv;
     }
 
-    List<PickUp> parse() {
+    Set<PickUp> parse() {
       var withoutComments = csv.lines()
         .filter(Predicate.not(String::isEmpty))
         .skip(2)
@@ -125,7 +125,7 @@ class FuerthTrashApi {
       ) {
         return parser.getRecords().stream()
           .flatMap(this::lineToPickUpStream)
-          .collect(Collectors.toList());
+          .collect(Collectors.toSet());
       } catch (IOException e) {
         throw new IllegalStateException("Reading from a string can't cause an IOException");
       }
